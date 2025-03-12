@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portofolio AI - Reykal</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'dark-bg': '#111827',
+                        'dark-secondary': '#1f2937',
+                        'text-light': '#f0fdfa',
+                        'text-gray': '#9ca3af',
+                        'accent': '#2dd4bf',
+                        'accent-dark': '#0d9488'
+                    },
+                    fontFamily: {
+                        serif: ['DM Serif Display', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Lightbox2 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.6.0/css/all.css" />
+
+    <style>
+        /* Custom fade-in for animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Navbar effect on scroll */
+        .navbar-scrolled {
+            background-color: rgba(20, 20, 20, 0.95);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        /* --- Chat Widget Styles (Combined and Refined) --- */
+        .chat-modal {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 350px;
+            max-width: 90%;
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        .chat-header {
+            background-color: #1f2937;
+            padding: 15px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #f0fdfa;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'DM Serif Display', serif;
+        }
+
+        .chat-header span {
+            margin-right: auto;
+        }
+
+        .chat-body {
+            padding: 15px;
+            height: 300px;
+            overflow-y: auto;
+            background-color: #111827;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Scrollbar styling */
+        .chat-body::-webkit-scrollbar {
+            width: 8px;
+            background-color: #1f2937;
+        }
+
+        .chat-body::-webkit-scrollbar-thumb {
+            background-color: #374151;
+            border-radius: 4px;
+        }
+
+        .chat-body::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+        }
+
+        .chat-body {
+            scrollbar-width: thin;
+            scrollbar-color: #374151 #1f2937;
+        }
+
+        .chat-footer {
+            padding: 10px;
+            background-color: #1f2937;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex-grow: 1;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 14px;
+            background-color: #1f2937;
+            color: #f0fdfa;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #2dd4bf;
+        }
+
+        .chat-send {
+            background-color: #2dd4bf;
+            border: none;
+            color: #111827;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .chat-send:hover {
+            background-color: #0d9488;
+        }
+
+        .chat-send:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .chat-message {
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 14px;
+            word-break: break-word;
+            max-width: 80%;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            line-height: 1.5;
+        }
+
+        .chat-message.user {
+            background-color: #fff;
+            color: #111827;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+
+        .chat-message.bot {
+            background-color: #2dd4bf;
+            color: #111827;
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+
+        .chat-message.bot ul,
+        .chat-message.bot ol {
+            list-style-position: inside;
+            padding-left: 0;
+            margin-left: 0;
+            margin-bottom: 0;
+        }
+
+        .chat-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #2dd4bf;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.2s ease;
+        }
+
+        .chat-toggle:hover {
+            background-color: #0d9488;
+        }
+
+        .chat-toggle svg {
+            width: 24px;
+            height: 24px;
+            transition: transform 0.2s ease;
+        }
+
+        .chat-toggle:hover svg {
+            transform: scale(1.1);
+        }
+
+        #chat-close {
+            background: transparent;
+            border: none;
+            color: #f0fdfa;
+            cursor: pointer;
+            font-size: 1.2rem;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+
+        #chat-close:hover {
+            opacity: 1;
+        }
+
+        /* --- Modal Styles --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #111827;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #1f2937;
+            width: 90%;
+            max-width: 700px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            background: transparent;
+            border: none;
+            color: #f0fdfa;
+            cursor: pointer;
+        }
+
+        /* Penempatan gambar dengan grid agar responsif */
+        .modal-image-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .modal-image-container img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        /* CSS untuk modal image container sudah ada */
+        .modal-image-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .modal-image-container img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        /* Media query untuk tampilan desktop agar gambar tidak terlalu besar */
+        @media (min-width: 1024px) {
+            .modal-image-container img {
+                max-width: 400px;
+                /* Atur sesuai proporsi yang diinginkan */
+                margin: 0 auto;
+            }
+        }
+
+        .chat-toggle {
+            animation: heartbeat 2.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0% {
+                transform: scale(1);
+            }
+
+            25% {
+                transform: scale(1.1);
+            }
+
+            50% {
+                transform: scale(1);
+            }
+
+            75% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        footer {
+            background-color: #111827;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .footer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-container p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .social-links {
+            margin-top: 10px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            font-size: 24px;
+            color: white;
+            transition: transform 0.3s ease-in-out, color 0.3s;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.2);
+        }
+
+        /* Warna spesifik saat hover */
+        .social-icon:nth-child(1):hover {
+            color: #0077b5;
+            /* LinkedIn */
+        }
+
+        .social-icon:nth-child(2):hover {
+            color: #E4405F;
+            /* Instagram */
+        }
+
+        /* Styling Notifikasi Custom */
+        #notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            background-color: #2dd4bf;
+            color: #111827;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 16px;
+            opacity: 0;
+            z-index: 1000;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        #notification.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+
+<body class="bg-dark-bg text-text-light">
+
+    <!-- Navbar -->
+    <nav class="navbar fixed w-full z-40 transition-all duration-300">
+        <div class="container mx-auto flex items-center justify-between p-4">
+            <a href="#" class="flex items-center text-2xl font-bold text-accent">
+                <svg width="40" height="40" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M15 10 C 18 8, 25 6, 35 10 C 45 14, 48 22, 45 30 C 42 38, 35 44, 25 45 C 20 45.5, 15 44, 12 40 L 18 35"
+                        stroke="#2dd4bf" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M20 45 L 40 55" stroke="#2dd4bf" stroke-width="5" stroke-linecap="round" />
+                </svg>
+                <span class="ml-2"></span>
+            </a>
+            <div class="md:hidden">
+                <button id="mobile-menu-btn" class="text-accent focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+            <ul id="nav-menu" class="hidden md:flex space-x-8">
+                <li><a href="#about" class="hover:text-accent transition-colors">Tentang Saya</a></li>
+                <li><a href="#projects" class="hover:text-accent transition-colors">Proyek</a></li>
+                <li><a href="#skills" class="hover:text-accent transition-colors">Keterampilan</a></li>
+                <li><a href="#contact" class="hover:text-accent transition-colors">Kontak</a></li>
+            </ul>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-dark-bg">
+            <ul class="flex flex-col space-y-4 p-4">
+                <li><a href="#about" class="hover:text-accent transition-colors">Tentang Saya</a></li>
+                <li><a href="#projects" class="hover:text-accent transition-colors">Proyek</a></li>
+                <li><a href="#skills" class="hover:text-accent transition-colors">Keterampilan</a></li>
+                <li><a href="#contact" class="hover:text-accent transition-colors">Kontak</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative h-screen flex items-center justify-center text-center">
+        <div class="absolute inset-0 bg-cover bg-center"
+            style="background-image: url('placeholder-hero-bg.jpg'); filter: brightness(0.6);"></div>
+        <div class="relative z-10 px-4">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">Reykal</h1>
+            <p class="text-lg md:text-xl text-text-gray mb-8">Pengembang AI & Machine Learning</p>
+            <a href="#projects"
+                class="inline-block bg-accent hover:bg-accent-dark text-white px-8 py-3 rounded-full transition-colors">Lihat
+                Proyek</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Tentang Saya</h2>
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 flex justify-center mb-8 md:mb-0">
+                    <img src="WhatsApp Image 2025-03-11 at 01.26.27 (3).png" alt="Foto Profil"
+                        class="w-64 h-64 md:w-72 md:h-72 rounded-full object-cover shadow-lg" />
+                </div>
+                <div class="md:w-1/2 text-center md:text-left">
+                    <p class="text-base md:text-lg text-text-gray">
+                        Saya adalah seorang <strong>AI Engineer</strong> yang berfokus pada pengembangan solusi
+                        <strong>machine learning</strong> yang <strong>impactful</strong> dan <strong>scalable</strong>.
+                        Saya memiliki passion untuk menggabungkan teknologi terkini dengan pendekatan
+                        <strong>problem-solving</strong> yang kreatif.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-16 md:py-20 bg-dark-secondary">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 md:mb-12 text-center section-title">Proyek</h2>
+            <div class="grid grid-cols-1 gap-6">
+                <!-- Hanya ada 1 project card untuk Arum - Barista AI -->
+                <div id="project-card"
+                    class="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer"
+                    onclick="openProjectModal()">
+                    <img src="Untitled (28).png" alt="Arum - Barista AI"
+                        class="w-full h-64 object-cover transform group-hover:scale-110 transition-all duration-500">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-4">
+                        <h3 class="text-xl text-white font-semibold mb-2">Arum - Barista AI</h3>
+                        <p class="text-sm text-gray-200">Asisten virtual untuk pemesanan kopi di kafe, memanfaatkan
+                            kekuatan Gemini Flash.</p>
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-gray-700 text-gray-300 rounded-full text-xs">Python</span>
+                            <span class="px-2 py-1 bg-gray-700 text-gray-300 rounded-full text-xs">Flask</span>
+                            <span class="px-2 py-1 bg-gray-700 text-gray-300 rounded-full text-xs">Google Gemini
+                                Flash</span>
+                        </div>
+                        <a href="https://rey.wuaze.com/" target="_blank" onclick="event.stopPropagation()"
+                            class="inline-block mt-3 text-accent hover:underline text-sm">Lihat Demo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Detail Modal -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" id="close-modal">×</button>
+            <h2 class="text-2xl md:text-3xl font-bold mb-4">Arum - Barista AI</h2>
+            <!-- Hanya menampilkan gambar mobile -->
+            <div class="modal-image-container">
+                <img src="rey.wuaze.com__i=1(iPhone 14 Pro Max).png" alt="Arum - Mobile Screenshot">
+            </div>
+            <p class="text-base md:text-lg text-text-gray mb-6">
+                Arum adalah asisten virtual yang dirancang untuk meningkatkan pengalaman pemesanan di kafe virtual.
+                Dengan integrasi Google Gemini Flash, Arum mampu:
+            </p>
+            <ul class="list-disc pl-6 mb-6 text-base md:text-lg">
+                <li>Memahami bahasa alami pelanggan.</li>
+                <li>Memberikan rekomendasi menu yang personal.</li>
+                <li>Menangani pertanyaan seputar menu dan kafe.</li>
+                <li>Memproses pesanan dengan akurat.</li>
+                <li>Berinteraksi dengan ramah dan efisien.</li>
+            </ul>
+            <p class="text-base md:text-lg text-text-gray mb-4">
+                Proyek ini dibangun menggunakan teknologi berikut:
+            </p>
+            <div class="flex flex-wrap gap-2 mb-6">
+                <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">Python</span>
+                <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">Flask</span>
+                <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">Google Gemini Flash</span>
+            </div>
+            <a href="https://rey.wuaze.com/" target="_blank"
+                class="inline-block text-accent hover:underline text-base md:text-lg">Lihat Demo</a>
+        </div>
+    </div>
+
+
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Keterampilan</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8">
+                <div class="flex flex-col items-center">
+                    <i class="fa-brands fa-python text-5xl text-accent mb-2 hover:scale-110 transition-transform"></i>
+                    <p class="text-base font-medium">Python</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <i class="fa-solid fa-brain text-5xl text-accent mb-2 hover:scale-110 transition-transform"></i>
+                    <p class="text-base font-medium">Machine Learning</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <i
+                        class="fa-solid fa-chart-simple text-5xl text-accent mb-2 hover:scale-110 transition-transform"></i>
+                    <p class="text-base font-medium">Data Analysis</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <i class="fa-brands fa-html5 text-5xl text-accent mb-2 hover:scale-110 transition-transform"></i>
+                    <p class="text-base font-medium">HTML</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <i class="fa-brands fa-css3-alt text-5xl text-accent mb-2 hover:scale-110 transition-transform"></i>
+                    <p class="text-base font-medium">CSS</p>
+                </div>
+                <div class="flex flex-col items-center">
+                    <i class="fa-brands fa-js text-5xl text-accent mb-2 hover:scale-110 transition-transform"></i>
+                    <p class="text-base font-medium">JavaScript</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-dark-secondary">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Kontak</h2>
+            <div class="max-w-lg mx-auto">
+                <form id="contact-form" class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-300">Nama</label>
+                        <input type="text" id="name" name="name" required
+                            class="mt-1 block w-full p-2 bg-gray-800 text-text-light border border-gray-700 rounded-md focus:border-accent focus:ring focus:ring-accent/30" />
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
+                        <input type="email" id="email" name="email" required
+                            class="mt-1 block w-full p-2 bg-gray-800 text-text-light border border-gray-700 rounded-md focus:border-accent focus:ring focus:ring-accent/30" />
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-300">Pesan</label>
+                        <textarea id="message" name="message" rows="4" required
+                            class="mt-1 block w-full p-2 bg-gray-800 text-text-light border border-gray-700 rounded-md focus:border-accent focus:ring focus:ring-accent/30"></textarea>
+                    </div>
+                    <button type="submit"
+                        class="w-full bg-accent hover:bg-accent-dark text-white py-2 rounded-md transition-colors"
+                        id="submit-btn-contact">
+                        Kirim Pesan
+                    </button>
+                </form>
+                <!-- Elemen Notifikasi Custom -->
+                <div id="notification"></div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+          e.preventDefault();
+      
+          // Ambil data dari form
+          var formData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            message: document.getElementById('message').value
+          };
+      
+          // URL Apps Script Web App (ganti dengan URL deployment Anda)
+          var scriptURL = 'https://script.google.com/macros/s/AKfycbwOnpojIrcb8FSlxQcswDYuRqTQ1qMGfyBZEsL72OCf9Bh23MF0d9Hex4PoF7WRAC_0/exec';
+      
+          fetch(scriptURL, {
+            method: 'POST',
+            mode: 'no-cors', // Gunakan 'no-cors' jika belum mengatur CORS di Apps Script
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+          })
+          .then(() => {
+            showNotification('Pesan berhasil dikirim!', 'success');
+            document.getElementById('contact-form').reset();
+          })
+          .catch((error) => {
+            console.error('Error!', error.message);
+            showNotification('Terjadi kesalahan, pesan tidak terkirim.', 'error');
+          });
+        });
+      </script>
+      
+
+
+
+    <!-- Chat Widget HTML -->
+    <div class="chat-toggle" id="chat-toggle">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="7" r="2" fill="#111827" />
+            <circle cx="7" cy="12" r="2" fill="#111827" />
+            <circle cx="17" cy="12" r="2" fill="#111827" />
+            <circle cx="12" cy="17" r="2" fill="#111827" />
+            <path d="M12 7 L 7 12 M12 7 L 17 12 M7 12 L 12 17 M17 12 L 12 17" stroke="#111827" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    </div>
+
+    <div class="chat-modal" id="chat-modal">
+        <div class="chat-header">
+            <span>Asisten AI</span>
+            <button id="chat-close">×</button>
+        </div>
+        <div class="chat-body" id="chat-body">
+            <div class="chat-message bot">Halo, selamat datang di portofolio Reykal! Tanyakan apa saja tentang Reykal.
+            </div>
+        </div>
+        <form id="chat-form" class="chat-footer">
+            <input type="text" id="chat-input" class="chat-input" placeholder="Tanyakan sesuatu..." autocomplete="off">
+            <button type="submit" class="chat-send" disabled>Kirim</button>
+        </form>
+    </div>
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2025 Reykal. All rights reserved.</p>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/reykal-al-hikam-469956286/" target="_blank" class="social-icon">
+                    <i class="fa-brands fa-linkedin"></i>
+                </a>
+                <a href="https://www.instagram.com/reyhkm" target="_blank" class="social-icon">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Toggle mobile menu
+            $('#mobile-menu-btn').click(function () {
+                $('#mobile-menu').slideToggle();
+            });
+
+            // Smooth scroll for anchor links
+            $('a[href*="#"]').on('click', function (e) {
+                e.preventDefault();
+                var target = $(this).attr('href');
+                $('html, body').animate({
+                    scrollTop: $(target).offset().top - 70
+                }, 600);
+                // Close mobile menu if open
+                if ($('#mobile-menu').is(':visible')) {
+                    $('#mobile-menu').slideUp();
+                }
+            });
+
+            // Navbar effect on scroll
+            $(window).on('scroll', function () {
+                if ($(window).scrollTop() > 80) {
+                    $('.navbar').addClass('navbar-scrolled');
+                } else {
+                    $('.navbar').removeClass('navbar-scrolled');
+                }
+            });
+
+            // Fade-in animation with Intersection Observer
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            $(entry.target).addClass('appear');
+                        }
+                    });
+                },
+                { threshold: 0.2 }
+            );
+            $('.fade-in').each(function () {
+                observer.observe(this);
+            });
+
+            // Simulate contact form submission
+            $('#contact-form').on('submit', function (e) {
+                e.preventDefault();
+
+                const name = $('#name').val().trim();
+                const email = $('#email').val().trim();
+                const message = $('#message').val().trim();
+
+                if (name === '' || email === '' || message === '') {
+                    showNotification('Harap isi semua kolom!', 'error');
+                    return;
+                }
+
+                $('#submit-btn-contact').prop('disabled', true).text('Mengirim...');
+
+                // Simulasi pengiriman data (ganti setTimeout dengan fetch untuk backend asli)
+                setTimeout(function () {
+                    showNotification('Pesan terkirim :)', 'success');
+                    $('#contact-form')[0].reset();
+                    $('#submit-btn-contact').prop('disabled', false).text('Kirim Pesan');
+                }, 2000);
+            });
+
+            function showNotification(message, type) {
+                const notification = $('#notification');
+
+                // Atur warna background sesuai tipe notifikasi
+                if (type === 'error') {
+                    notification.css('background-color', '#e74c3c'); // Merah untuk error
+                } else {
+                    notification.css('background-color', '#2dd4bf'); // Warna accent untuk sukses
+                }
+
+                notification.text(message).addClass('show');
+
+                // Notifikasi tampil selama 3 detik lalu menghilang
+                setTimeout(function () {
+                    notification.removeClass('show');
+                }, 3000);
+            }
+
+
+            // --- Chat Widget Script ---
+            let isLoading = false;
+
+            $("#chat-toggle").click(function () {
+                $("#chat-modal").fadeIn();
+            });
+
+            $("#chat-close").click(function () {
+                $("#chat-modal").fadeOut();
+            });
+
+            $("#chat-input").on("input", function () {
+                const inputVal = $(this).val().trim();
+                $(".chat-send").prop("disabled", inputVal === "" || isLoading);
+            });
+
+            $("#chat-form").submit(function (e) {
+                e.preventDefault();
+                var message = $("#chat-input").val().trim();
+                if (message === "" || isLoading) return;
+
+                isLoading = true;
+                $(".chat-send").prop("disabled", true);
+
+                $("#chat-body").append("<div class='chat-message user'>" + message.replace(/\n/g, "<br>") + "</div>");
+                $("#chat-input").val("");
+                scrollChatToBottom();
+
+                var $botMsg = $("<div class='chat-message bot'>").html("<span class='loading'>...</span>");
+                $("#chat-body").append($botMsg);
+                scrollChatToBottom();
+
+                $.ajax({
+                    type: "POST",
+                    url: "https://reyhiz.pythonanywhere.com/chat",
+                    data: { message: message },
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    success: function (data) {
+                        isLoading = false;
+                        $(".chat-send").prop("disabled", $("#chat-input").val().trim() === "");
+                        $botMsg.html(data.response.replace(/\n/g, "<br>"));
+                        scrollChatToBottom();
+                    },
+                    error: function (error) {
+                        isLoading = false;
+                        $(".chat-send").prop("disabled", $("#chat-input").val().trim() === "");
+                        $botMsg.html("Maaf, terjadi kesalahan.");
+                        scrollChatToBottom();
+                    }
+                });
+            });
+
+            function scrollChatToBottom() {
+                $("#chat-body").scrollTop($("#chat-body")[0].scrollHeight);
+            }
+        });
+
+        // Modal functionality untuk project detail
+        function openProjectModal() {
+            document.getElementById("project-modal").style.display = "block";
+        }
+        document.getElementById("close-modal").addEventListener("click", function () {
+            document.getElementById("project-modal").style.display = "none";
+        });
+        window.addEventListener("click", function (event) {
+            var modal = document.getElementById("project-modal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        });
+    </script>
+</body>
+
+</html>
