@@ -417,33 +417,6 @@
             opacity: 1;
             transform: translateX(-50%) translateY(0);
         }
-
-        /* Animasi loading dots */
-.loading {
-    display: inline-block;
-    width: fit-content; /* Penting agar lebarnya sesuai konten */
-    overflow: hidden;  /* Sembunyikan titik yang di luar */
-}
-
-.loading i {
-  display: inline-block; /* Agar animasi bekerja pada setiap titik */
-  margin-right: 2px;  /* Jarak antar titik */
-  animation: loading-dots 1.5s infinite; /* Animasi dan durasi */
-  opacity: 0; /* Awalnya transparan */
-}
-
-/* Animasi untuk setiap titik */
-.loading i:nth-child(1) { animation-delay: 0s; }
-.loading i:nth-child(2) { animation-delay: 0.2s; }
-.loading i:nth-child(3) { animation-delay: 0.4s; }
-
-@keyframes loading-dots {
-  0% { opacity: 0; transform: translateY(0); }
-  25% { opacity: 1; transform: translateY(-2px); }
-  50% { opacity: 1; transform: translateY(0); }
-  75% { opacity: 0; } /* Kembali transparan sebelum loop */
-  100% { opacity: 0; }
-}
     </style>
 </head>
 
@@ -819,64 +792,64 @@
             }
 
 
+            // --- Chat Widget Script ---
+            let isLoading = false;
 
-    // --- Chat Widget Script ---
-    let isLoading = false;
+            $("#chat-toggle").click(function () {
+                $("#chat-modal").fadeIn();
+            });
 
-    $("#chat-toggle").click(function () {
-        $("#chat-modal").fadeIn();
-    });
+            $("#chat-close").click(function () {
+                $("#chat-modal").fadeOut();
+            });
 
-    $("#chat-close").click(function () {
-        $("#chat-modal").fadeOut();
-    });
+            $("#chat-input").on("input", function () {
+                const inputVal = $(this).val().trim();
+                $(".chat-send").prop("disabled", inputVal === "" || isLoading);
+            });
 
-    $("#chat-input").on("input", function () {
-        const inputVal = $(this).val().trim();
-        $(".chat-send").prop("disabled", inputVal === "" || isLoading);
-    });
+            $("#chat-form").submit(function (e) {
+                e.preventDefault();
+                var message = $("#chat-input").val().trim();
+                if (message === "" || isLoading) return;
 
-    $("#chat-form").submit(function (e) {
-        e.preventDefault();
-        var message = $("#chat-input").val().trim();
-        if (message === "" || isLoading) return;
+                isLoading = true;
+                $(".chat-send").prop("disabled", true);
 
-        isLoading = true;
-        $(".chat-send").prop("disabled", true);
-
-        $("#chat-body").append("<div class='chat-message user'>" + message.replace(/\n/g, "<br>") + "</div>");
-        $("#chat-input").val("");
-        scrollChatToBottom();
-
-        var $botMsg = $("<div class='chat-message bot'>").html("<span class='loading'><i>.</i><i>.</i><i>.</i></span>"); // Perubahan di sini
-        $("#chat-body").append($botMsg);
-        scrollChatToBottom();
-
-        $.ajax({
-            type: "POST",
-            url: "https://reyhiz.pythonanywhere.com/chat",
-            data: { message: message },
-            xhrFields: {
-                withCredentials: true
-            },
-            success: function (data) {
-                isLoading = false;
-                $(".chat-send").prop("disabled", $("#chat-input").val().trim() === "");
-                $botMsg.html(data.response.replace(/\n/g, "<br>"));
+                $("#chat-body").append("<div class='chat-message user'>" + message.replace(/\n/g, "<br>") + "</div>");
+                $("#chat-input").val("");
                 scrollChatToBottom();
-            },
-            error: function (error) {
-                isLoading = false;
-                $(".chat-send").prop("disabled", $("#chat-input").val().trim() === "");
-                $botMsg.html("Maaf, terjadi kesalahan.");
+
+                var $botMsg = $("<div class='chat-message bot'>").html("<span class='loading'>...</span>");
+                $("#chat-body").append($botMsg);
                 scrollChatToBottom();
+
+                $.ajax({
+                    type: "POST",
+                    url: "https://reyhiz.pythonanywhere.com/chat",
+                    data: { message: message },
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    success: function (data) {
+                        isLoading = false;
+                        $(".chat-send").prop("disabled", $("#chat-input").val().trim() === "");
+                        $botMsg.html(data.response.replace(/\n/g, "<br>"));
+                        scrollChatToBottom();
+                    },
+                    error: function (error) {
+                        isLoading = false;
+                        $(".chat-send").prop("disabled", $("#chat-input").val().trim() === "");
+                        $botMsg.html("Maaf, terjadi kesalahan.");
+                        scrollChatToBottom();
+                    }
+                });
+            });
+
+            function scrollChatToBottom() {
+                $("#chat-body").scrollTop($("#chat-body")[0].scrollHeight);
             }
         });
-    });
-
-    function scrollChatToBottom() {
-        $("#chat-body").scrollTop($("#chat-body")[0].scrollHeight);
-    }
 
         // Modal functionality untuk project detail
         function openProjectModal() {
