@@ -101,7 +101,7 @@
 
         .chat-body {
             padding: 15px;
-            height: 400px;
+            height: 300px;
             overflow-y: auto;
             background-color: #111827;
             display: flex;
@@ -218,16 +218,23 @@
             align-items: center;
             cursor: pointer;
             z-index: 1000;
-    box-shadow: 0 0 10px 5px rgba(45, 212, 191, 0.7);
-    transition: box-shadow 0.3s ease; /*  <--  Tambahkan transisi untuk animasi  */
-        }
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);  <-- Hapus atau komentari baris ini */
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; /* Tambahkan transisi box-shadow */
+}
 
-        .chat-toggle:hover {
-            background-color: #0d9488;
-                box-shadow: 0 0 20px 12px rgba(45, 212, 191, 0.9),
-                0 0 30px 18px rgba(45, 212, 191, 0.5); /* Tambahkan bayangan kedua untuk efek lebih dalam */
-        }
+.chat-toggle:hover {
+    background-color: #0d9488; /* Sudah ada */
+     /* box-shadow:  Hapus atau komentari baris box-shadow di sini */
+}
+/* Keadaan kembang (dengan glowing) */
+.chat-toggle.glowing {
+  box-shadow: 0 0 10px 5px #2dd4bf;
+}
 
+/*Saat hover dan dalam keadaan glowing*/
+.chat-toggle.glowing:hover{
+  box-shadow: 0 0 15px 8px #2dd4bf;
+}
         .chat-toggle svg {
             width: 24px;
             height: 24px;
