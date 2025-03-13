@@ -844,10 +844,12 @@
 
             $("#chat-toggle").click(function () {
                 $("#chat-modal").fadeIn();
+                    $("#chat-toggle").addClass("glowing"); // Tambahkan class glowing
             });
 
             $("#chat-close").click(function () {
                 $("#chat-modal").fadeOut();
+                    $("#chat-toggle").removeClass("glowing"); // Hapus class glowing
             });
 
             $("#chat-input").on("input", function () {
