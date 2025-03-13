@@ -417,6 +417,33 @@
             opacity: 1;
             transform: translateX(-50%) translateY(0);
         }
+
+.chat-message.bot .loading {
+    display: inline-flex; /* Membuat titik-titik berbaris horizontal */
+    align-items: center; /* Pusatkan secara vertikal */
+}
+
+.chat-message.bot .loading span {
+    display: inline-block; /* Agar span bisa dianimasikan */
+    margin: 0 2px; /* Sedikit spasi antar titik */
+    animation: dot-bounce 1.2s infinite ease-in-out; /* Animasi utama */
+    animation-delay: 0s; /* Delay awal (akan dimodifikasi) */
+}
+
+/* Delay untuk setiap titik */
+.chat-message.bot .loading span:nth-child(1) { animation-delay: 0s; }
+.chat-message.bot .loading span:nth-child(2) { animation-delay: 0.2s; }
+.chat-message.bot .loading span:nth-child(3) { animation-delay: 0.4s; }
+
+/* Keyframes untuk animasi naik-turun */
+@keyframes dot-bounce {
+    0%, 100% {
+        transform: translateY(0); /* Posisi awal dan akhir */
+    }
+    50% {
+        transform: translateY(-5px); /* Naik ke atas */
+    }
+}
     </style>
 </head>
 
@@ -831,7 +858,7 @@
                 $("#chat-input").val("");
                 scrollChatToBottom();
 
-                var $botMsg = $("<div class='chat-message bot'>").html("<span class='loading'>...</span>");
+                var $botMsg = $("<div class='chat-message bot'>").html("<span class='loading'><span>.</span><span>.</span><span>.</span></span>");
                 $("#chat-body").append($botMsg);
                 scrollChatToBottom();
 
