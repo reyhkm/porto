@@ -444,39 +444,6 @@
         transform: translateY(-5px); /* Naik ke atas */
     }
 }
-
-        #mobile-menu-btn {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 30px; /* Sesuaikan lebar sesuai kebutuhan */
-  height: 25px; /* Sesuaikan tinggi sesuai kebutuhan */
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-}
-
-.burger-line {
-  display: block;
-  width: 100%;
-  height: 3px; /* Sesuaikan ketebalan garis */
-  background-color: #2dd4bf; /* Sesuaikan warna garis */
-  transition: all 0.3s ease-in-out; /* Animasi yang halus */
-}
-
-/* Animasi saat menu aktif */
-#mobile-menu-btn.active .burger-line:nth-child(1) {
-  transform: translateY(8px) rotate(45deg); /* Garis atas */
-}
-
-#mobile-menu-btn.active .burger-line:nth-child(2) {
-  opacity: 0; /* Garis tengah menghilang */
-}
-
-#mobile-menu-btn.active .burger-line:nth-child(3) {
-  transform: translateY(-8px) rotate(-45deg); /* Garis bawah */
-}
     </style>
 </head>
 
@@ -494,13 +461,11 @@
                 </svg>
                 <span class="ml-2"></span>
             </a>
-<div class="md:hidden">
-    <button id="mobile-menu-btn" class="text-accent focus:outline-none">
-      <span class="burger-line"></span>
-      <span class="burger-line"></span>
-      <span class="burger-line"></span>
-    </button>
-</div>
+            <div class="md:hidden">
+                <button id="mobile-menu-btn" class="text-accent focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
             <ul id="nav-menu" class="hidden md:flex space-x-8">
                 <li><a href="#about" class="hover:text-accent transition-colors">Tentang Saya</a></li>
                 <li><a href="#projects" class="hover:text-accent transition-colors">Proyek</a></li>
@@ -784,7 +749,6 @@
             // Toggle mobile menu
             $('#mobile-menu-btn').click(function () {
                 $('#mobile-menu').slideToggle();
-                        $(this).toggleClass('active');
             });
 
             // Smooth scroll for anchor links
