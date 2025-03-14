@@ -887,26 +887,28 @@
                 $("#chat-body").append($botMsg);
                 scrollChatToBottom();
 
-                $.ajax({
-                    type: "POST",
-                    url: "https://reyhiz.pythonanywhere.com/chat",
-                    data: { message: message },
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    success: function (data) {
-                        isLoading = false;
-                        $(".chat-send").prop("disabled", $("#chat-input").val().trim() === "");
-                        $botMsg.html(data.response.replace(/\n/g, "<br>"));
-                        scrollChatToBottom();
-                    },
-                    error: function (error) {
-                        isLoading = false;
-                        $(".chat-send").prop("disabled", $("#chat-input").val().trim() === "");
-                        $botMsg.html("Maaf, terjadi kesalahan.");
-                        scrollChatToBottom();
-                    }
-                });
+$.ajax({
+    type: "POST",
+    url: "https://gemininodejsaspri-production.up.railway.app/chat", // Ganti dengan URL backend Node.js Anda
+    contentType: "application/json",   // Kirim data sebagai JSON
+    data: JSON.stringify({ chat: message, history: [] }), // Gunakan key "chat" dan "history"
+    xhrFields: {
+        withCredentials: true
+    },
+    success: function (data) {
+        isLoading = false;
+        $(".chat-send").prop("disabled", $("#chat-input").val().trim() === "");
+        $botMsg.html(data.response.replace(/\n/g, "<br>"));
+        scrollChatToBottom();
+    },
+    error: function (error) {
+        isLoading = false;
+        $(".chat-send").prop("disabled", $("#chat-input").val().trim() === "");
+        $botMsg.html("Maaf, terjadi kesalahan.");
+        scrollChatToBottom();
+    }
+});
+
             });
 
             function scrollChatToBottom() {
