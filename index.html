@@ -536,35 +536,35 @@
         </div>
     </section>
 
-<!-- Projects Section -->
-<section id="projects" class="py-16 md:py-20 bg-dark-secondary">
-    <div class="container mx-auto px-4">
-        <h2 class="text-3xl md:text-4xl font-bold mb-8 md:mb-12 text-center section-title">Proyek</h2>
-        <div class="grid grid-cols-1 gap-6">
-            <!-- Hanya ada 1 project card untuk Arum - Barista AI -->
-            <div id="project-card"
-                class="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer"
-                onclick="openProjectModal()">
-                <img src="Untitled (28).png" alt="Arum - Barista AI"  <!-- Ganti dengan path gambar yang sesuai -->
-                    class="w-full h-64 object-cover transform group-hover:scale-110 transition-all duration-500">
-                <div
-                    class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-4">
-                    <h3 class="text-xl text-white font-semibold mb-2">Arum - Barista AI</h3>
-                    <p class="text-sm text-gray-200">Asisten virtual untuk pemesanan kopi di kafe, memanfaatkan
-                        kekuatan Gemini Flash.</p>
-                    <div class="mt-3 flex flex-wrap gap-2">
-                        <span class="px-2 py-1 bg-gray-700 text-gray-300 rounded-full text-xs">Python</span>
-                        <span class="px-2 py-1 bg-gray-700 text-gray-300 rounded-full text-xs">Node.js</span>
-                        <span class="px-2 py-1 bg-gray-700 text-gray-300 rounded-full text-xs">Google Gemini
-                            Flash</span>
+    <!-- Projects Section -->
+    <section id="projects" class="py-16 md:py-20 bg-dark-secondary">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 md:mb-12 text-center section-title">Proyek</h2>
+            <div class="grid grid-cols-1 gap-6">
+                <!-- Hanya ada 1 project card untuk Arum - Barista AI -->
+                <div id="project-card"
+                    class="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer"
+                    onclick="openProjectModal()">
+                    <img src="Untitled (28).png" alt="Arum - Barista AI"
+                        class="w-full h-64 object-cover transform group-hover:scale-110 transition-all duration-500">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-4">
+                        <h3 class="text-xl text-white font-semibold mb-2">Arum - Barista AI</h3>
+                        <p class="text-sm text-gray-200">Asisten virtual untuk pemesanan kopi di kafe, memanfaatkan
+                            kekuatan Gemini Flash.</p>
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-gray-700 text-gray-300 rounded-full text-xs">Python</span>
+                            <span class="px-2 py-1 bg-gray-700 text-gray-300 rounded-full text-xs">Flask</span>
+                            <span class="px-2 py-1 bg-gray-700 text-gray-300 rounded-full text-xs">Google Gemini
+                                Flash</span>
+                        </div>
+                        <a href="https://rey.wuaze.com/" target="_blank" onclick="event.stopPropagation()"
+                            class="inline-block mt-3 text-accent hover:underline text-sm">Lihat Demo</a>
                     </div>
-                    <a href="https://aicoffee.pages.dev/" target="_blank" onclick="event.stopPropagation()"
-                        class="inline-block mt-3 text-accent hover:underline text-sm">Lihat Demo</a>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
 <!-- Project Detail Modal -->
 <div id="project-modal" class="modal">
@@ -574,11 +574,11 @@
         <!-- Container untuk gambar dan tautan -->
         <div class="modal-image-container">
             <div class="half-image-container" id="half-image-container">
-                <img src="rey.wuaze.com__i=1(iPhone 14 Pro Max).png" alt="Arum - Mobile Screenshot"> <!--Ganti src img jika ada ss baru-->
+                <img src="rey.wuaze.com__i=1(iPhone 14 Pro Max).png" alt="Arum - Mobile Screenshot">
             </div>
             <p id="see-more-link" class="text-center text-accent cursor-pointer hover:underline">Lihat Selengkapnya</p>
             <div class="full-image-container" id="full-image-container" style="display: none;">
-                <img src="rey.wuaze.com__i=1(iPhone 14 Pro Max).png" alt="Arum - Mobile Screenshot"><!--Ganti src img jika ada ss baru-->
+                 <img src="rey.wuaze.com__i=1(iPhone 14 Pro Max).png" alt="Arum - Mobile Screenshot">
             </div>
         </div>
 
@@ -592,17 +592,16 @@
             <li>Menangani pertanyaan seputar menu dan kafe.</li>
             <li>Memproses pesanan dengan akurat.</li>
             <li>Berinteraksi dengan ramah dan efisien.</li>
-            <li><strong >Menambahkan pesanan ke Google Sheets secara otomatis menggunakan Function Calling.</strong></li> <!-- Baris ini yang ditambahkan -->
         </ul>
         <p class="text-base md:text-lg text-text-gray mb-4">
             Proyek ini dibangun menggunakan teknologi berikut:
         </p>
         <div class="flex flex-wrap gap-2 mb-6">
             <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">Python</span>
-            <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">Node.js</span>
+            <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">Flask</span>
             <span class="px-3 py-1 bg-gray-700 text-gray-300 rounded-full text-sm">Google Gemini Flash</span>
         </div>
-        <a href="https://aicoffee.pages.dev/" target="_blank"
+        <a href="https://rey.wuaze.com/" target="_blank"
             class="inline-block text-accent hover:underline text-base md:text-lg">Lihat Demo</a>
     </div>
 </div>
