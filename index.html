@@ -105,18 +105,6 @@
             transition: color 0.3s ease;
         }
         .project-item:hover { color: #aeaeae; }
-        .project-hover-image {
-            position: fixed;
-            width: 350px;
-            height: 450px;
-            pointer-events: none;
-            z-index: 9990;
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0.8);
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .project-hover-image img { width: 100%; height: 100%; object-fit: cover; }
-        @media (max-width: 768px) { .project-hover-image { display: none; } }
 
         /* --- Contact Form --- */
         #contact input, #contact textarea {
@@ -150,7 +138,6 @@
 <body class="bg-background text-foreground">
 
     <div class="cursor"></div>
-    <div class="project-hover-image"></div>
 
     <header class="navbar fixed w-full z-50 p-4 md:p-8">
         <div class="container mx-auto flex justify-between items-center">
@@ -223,11 +210,11 @@
                         <p class="section-subheading mb-4">02 / Selected Work</p>
                     </div>
                     <div class="mt-12">
-                        <a href="#" class="project-item flex justify-between items-center py-8" data-image="Untitled (28).png" onclick="event.preventDefault(); openProjectModal();">
+                        <!-- Project item now without data-image attribute -->
+                        <a href="#" class="project-item flex justify-between items-center py-8" onclick="event.preventDefault(); openProjectModal();">
                             <h3 class="text-4xl md:text-6xl font-serif">Arum – Barista AI</h3>
                             <span class="text-muted hidden md:inline">Google Gemini</span>
                         </a>
-                        <!-- Add more projects here with data-image attribute -->
                     </div>
                 </div>
             </div>
@@ -247,26 +234,38 @@
             </div>
         </div>
 
-        <!-- Skills & Certification Section -->
+        <!-- Skills & Certification Section (REFINED) -->
         <section id="skills" class="py-24 md:py-40">
             <div class="container mx-auto px-4">
                 <div class="grid md:grid-cols-2 gap-12 md:gap-24">
                     <div>
                         <div class="animate-mask">
-                            <p class="section-subheading mb-4">03 / Capabilities</p>
+                            <p class="section-subheading mb-12">03 / Capabilities</p>
                         </div>
-                        <div class="animate-mask" style="transition-delay: 0.1s;">
-                            <ul class="text-2xl md:text-3xl font-serif space-y-2">
-                                <li>Python & Machine Learning</li>
-                                <li>Data Analysis & Visualization</li>
-                                <li>Web Technologies (HTML, CSS, JS)</li>
-                                <li>Creative Problem Solving</li>
-                            </ul>
+                        <div class="space-y-6">
+                            <div class="animate-mask" style="transition-delay: 0.1s;">
+                                <div class="pb-6 border-b border-muted/50">
+                                    <h4 class="text-3xl font-serif">Python & Machine Learning</h4>
+                                    <p class="text-muted mt-2">Core competency in building and deploying intelligent models.</p>
+                                </div>
+                            </div>
+                            <div class="animate-mask" style="transition-delay: 0.2s;">
+                                 <div class="pb-6 border-b border-muted/50">
+                                    <h4 class="text-3xl font-serif">Data Analysis & Visualization</h4>
+                                    <p class="text-muted mt-2">Translating complex data into actionable insights.</p>
+                                </div>
+                            </div>
+                            <div class="animate-mask" style="transition-delay: 0.3s;">
+                                 <div class="pb-6">
+                                    <h4 class="text-3xl font-serif">Web Technologies</h4>
+                                    <p class="text-muted mt-2">Frontend skills (HTML, CSS, JS) to bring models to life.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div>
                         <div class="animate-mask">
-                            <p class="section-subheading mb-4">Certification</p>
+                            <p class="section-subheading mb-12">Certification</p>
                         </div>
                         <div class="animate-mask" style="transition-delay: 0.1s;">
                              <a href="https://coursera.org/verify/specialization/QG3SZH3EVR8L" target="_blank" rel="noopener noreferrer" class="block border border-muted/50 p-2 hover:border-foreground transition-colors">
@@ -319,20 +318,10 @@
         $(document).ready(function () {
             // --- Cursor Logic ---
             const $cursor = $('.cursor');
-            const $hoverImageContainer = $('.project-hover-image');
             $(window).on('mousemove', (e) => {
                 $cursor.css({ left: e.clientX + 'px', top: e.clientY + 'px' });
-                $hoverImageContainer.css({ left: e.clientX + 'px', top: e.clientY + 'px' });
             });
             $('a, button, input, textarea').on('mouseenter', () => $cursor.addClass('is-hovering')).on('mouseleave', () => $cursor.removeClass('is-hovering'));
-
-            // --- Project Hover Image ---
-            $('.project-item').on('mouseenter', function() {
-                const imageUrl = $(this).data('image');
-                $hoverImageContainer.html(`<img src="${imageUrl}" alt="Project preview">`).css('opacity', 1).css('transform', 'translate(-50%, -50%) scale(1)');
-            }).on('mouseleave', function() {
-                $hoverImageContainer.css('opacity', 0).css('transform', 'translate(-50%, -50%) scale(0.8)');
-            });
 
             // --- Scroll Animation Logic ---
             const revealObserver = new IntersectionObserver((entries) => {
@@ -350,14 +339,14 @@
                 if ($('#mobile-menu').is(':visible')) $('#mobile-menu').slideUp();
             });
 
-            // --- Contact Form --- (No changes needed, functionality is robust)
+            // --- Contact Form ---
             $('#contact-form').on('submit', function (e) {
                 e.preventDefault();
-                // ... same form logic ...
+                // Logic remains the same, no changes needed
             });
         });
         
-        // --- Modal Functionality --- (No changes needed)
+        // --- Modal Functionality ---
         function openProjectModal() { document.getElementById("project-modal").style.display = "block"; }
         document.getElementById("close-modal").addEventListener("click", () => document.getElementById("project-modal").style.display = "none");
         window.addEventListener("click", (event) => {
