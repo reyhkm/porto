@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reykal - An AI Atelier</title>
+    <title>Reykal - A Study in AI</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -22,11 +22,11 @@
                 extend: {
                     colors: {
                         'canvas': '#f4f1ea',
-                        'ink': '#1c1c1c', // Slightly darker ink
-                        'ink-light': '#5b5b5b',
-                        'accent': '#d97706',
-                        'accent-dark': '#b45309',
-                        'border-color': '#dcd8d0',
+                        'ink': '#3a3a3a',
+                        'ink-light': '#6b6b6b',
+                        'accent': '#849483', // Sage Green
+                        'accent-dark': '#677a66',
+                        'border-color': '#e5e1da',
                     },
                     fontFamily: {
                         serif: ['DM Serif Display', 'serif'],
@@ -38,13 +38,13 @@
     </script>
 
     <style>
-        /* --- KINETIC ARTISTRY - CORE STYLES --- */
-        :root { --cursor-size: 10px; --cursor-size-hover: 50px; }
+        /* --- SERENE ABSTRACTION - CORE STYLES --- */
+        :root { --cursor-size: 8px; --cursor-size-hover: 40px; }
 
         html { cursor: none; }
         body {
             background-color: #f4f1ea;
-            color: #1c1c1c;
+            color: #3a3a3a;
             font-family: 'Inter', sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -65,135 +65,92 @@
         }
         body:hover .cursor-outline { transform: translate(-50%, -50%) scale(1); }
         a:hover ~ .cursor-outline, button:hover ~ .cursor-outline, .cursor-pointer:hover ~ .cursor-outline {
-            transform: translate(-50%, -50%) scale(1.5); opacity: 0.5;
+            transform: translate(-50%, -50%) scale(1.3); opacity: 0.4;
         }
 
-        /* --- Scroll Reveal Animations --- */
+        /* --- Fluid Motion Animations --- */
         .reveal-element {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
-            transition-delay: 0.2s;
+            transform: translateY(40px);
+            transition: opacity 1.2s cubic-bezier(0.19, 1, 0.22, 1), transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
         }
         .reveal-element.is-revealed { opacity: 1; transform: translateY(0); }
 
         /* --- Typography & Section Styling --- */
         h1, h2, h3 { font-family: 'DM Serif Display', serif; }
         .section-title {
-            font-size: clamp(3rem, 10vw, 6rem);
-            line-height: 1; color: #1c1c1c;
+            font-size: clamp(3rem, 10vw, 5rem);
+            line-height: 1.1; color: #3a3a3a;
         }
         .section-tag {
-            font-size: 1rem; letter-spacing: 0.1em;
-            text-transform: uppercase; color: #d97706;
+            font-size: 0.9rem; letter-spacing: 0.1em;
+            text-transform: uppercase; color: #849483;
         }
 
         /* --- Navbar --- */
-        .navbar { transition: background-color 0.3s ease, border-color 0.3s ease; }
         .navbar-scrolled {
             background-color: rgba(244, 241, 234, 0.8);
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid #dcd8d0;
+            border-bottom: 1px solid #e5e1da;
         }
         .navbar a {
-            font-size: 0.9rem; letter-spacing: 0.05em; color: #1c1c1c;
+            font-size: 0.9rem; letter-spacing: 0.05em; color: #3a3a3a;
             position: relative; padding-bottom: 4px;
         }
         .navbar a::after {
             content: ''; position: absolute; bottom: 0; left: 0;
-            width: 0; height: 1px; background-color: #d97706;
-            transition: width 0.3s ease;
+            width: 0; height: 1px; background-color: #849483;
+            transition: width 0.4s ease;
         }
         .navbar a:hover::after { width: 100%; }
 
-        /* --- Hero Section --- */
-        #hero .hero-name {
-            font-size: clamp(5rem, 25vw, 18rem);
-            line-height: 0.8;
-            color: #1c1c1c;
-        }
-
-        /* --- Project Section --- */
+        /* --- Project List --- */
         .project-item {
-            border-bottom: 1px solid #dcd8d0;
-            position: relative;
+            border-top: 1px solid #e5e1da;
+            transition: background-color 0.4s ease;
         }
-        .project-image-wrapper {
-            position: absolute; top: 50%; left: 55%;
-            transform: translateY(-50%) scale(0.9) rotate(5deg);
-            width: 320px; z-index: 10;
-            opacity: 0; pointer-events: none;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-        .project-item:hover .project-image-wrapper {
-            opacity: 1;
-            transform: translateY(-50%) scale(1) rotate(0deg);
-            left: 60%;
-        }
-        @media (max-width: 768px) {
-            .project-image-wrapper { display: none; }
-        }
+        .project-item:hover { background-color: #edeae3; }
+        .project-item .arrow { transition: transform 0.4s ease; }
+        .project-item:hover .arrow { transform: translateX(5px); }
 
-        /* --- Skills Marquee --- */
-        .marquee {
-            position: relative;
-            width: 100vw;
-            max-width: 100%;
-            overflow: hidden;
+        /* --- Skills Pills --- */
+        .skill-pill {
+            border: 1px solid #e5e1da;
+            color: #6b6b6b;
+            transition: all 0.3s ease;
         }
-        .marquee-content {
-            display: flex;
-            width: fit-content;
-            animation: marquee 30s linear infinite;
+        .skill-pill:hover {
+            background-color: #849483;
+            color: #f4f1ea;
+            border-color: #849483;
         }
-        .marquee-item {
-            font-family: 'DM Serif Display', serif;
-            font-size: clamp(3rem, 8vw, 5rem);
-            padding: 0 2rem;
-            flex-shrink: 0;
-            white-space: nowrap;
-            color: #1c1c1c;
-        }
-        .marquee-item span { color: #d97706; margin: 0 2rem; }
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
+        
         /* --- Contact Form --- */
         #contact input, #contact textarea {
             background-color: transparent; border: none;
             border-bottom: 1px solid #dcd8d0; border-radius: 0;
-            padding: 0.75rem 0; font-size: 1rem; color: #1c1c1c;
+            padding: 1rem 0; font-size: 1.125rem; color: #3a3a3a;
             transition: border-color 0.3s ease;
         }
+        #contact input::placeholder, #contact textarea::placeholder { color: #9ca3af; }
         #contact input:focus, #contact textarea:focus {
-            outline: none; box-shadow: none; border-bottom-color: #d97706;
+            outline: none; box-shadow: none; border-bottom-color: #849483;
         }
         #contact button {
-            background-color: #1c1c1c; color: #f4f1ea; border: 1px solid #1c1c1c;
+            background-color: #3a3a3a; color: #f4f1ea; border: 1px solid #3a3a3a;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
-        #contact button:hover { background-color: transparent; color: #1c1c1c; }
+        #contact button:hover { background-color: transparent; color: #3a3a3a; }
 
         /* --- Footer --- */
-        footer { background-color: #1c1c1c; color: #f4f1ea; }
-        .social-icon { color: #f4f1ea; transition: color 0.3s ease, transform 0.3s ease; }
-        .social-icon:hover { color: #d97706; transform: translateY(-3px); }
+        footer { border-top: 1px solid #e5e1da; }
+        .social-icon { color: #6b6b6b; transition: color 0.3s ease; }
+        .social-icon:hover { color: #3a3a3a; }
 
-        /* --- Notification & Modal (Re-styled) --- */
-        #notification {
-            position: fixed; bottom: 20px; left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            background-color: #1c1c1c; color: #f4f1ea;
-            padding: 12px 24px; border-radius: 50px; font-size: 1rem;
-            opacity: 0; z-index: 1000;
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-        #notification.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(28, 28, 28, 0.8); backdrop-filter: blur(5px); }
-        .modal-content { background-color: #f4f1ea; color: #1c1c1c; margin: 5% auto; padding: 40px; border: 1px solid #dcd8d0; width: 90%; max-width: 700px; border-radius: 0; position: relative; }
-        .modal-close { position: absolute; top: 15px; right: 20px; font-size: 28px; background: transparent; border: none; color: #1c1c1c; cursor: pointer; }
+        /* --- Modal --- */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(58, 58, 58, 0.8); backdrop-filter: blur(8px); }
+        .modal-content { background-color: #f4f1ea; color: #3a3a3a; margin: 5% auto; padding: 40px; border: none; width: 90%; max-width: 700px; border-radius: 0; position: relative; }
+        .modal-close { position: absolute; top: 15px; right: 20px; font-size: 28px; background: transparent; border: none; color: #3a3a3a; cursor: pointer; }
     </style>
 </head>
 
@@ -202,12 +159,12 @@
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
 
-    <nav class="navbar fixed w-full z-40">
+    <nav class="navbar fixed w-full z-40 transition-all duration-300">
         <div class="container mx-auto flex items-center justify-between p-4 md:p-6">
             <a href="#" class="font-serif text-xl text-ink">Reykal</a>
             <div class="hidden md:flex space-x-8">
                 <a href="#about">About</a>
-                <a href="#projects">Projects</a>
+                <a href="#projects">Work</a>
                 <a href="#contact">Contact</a>
             </div>
             <div class="md:hidden">
@@ -219,7 +176,7 @@
         <div id="mobile-menu" class="md:hidden hidden bg-canvas/80 backdrop-blur-md">
             <ul class="flex flex-col items-center space-y-6 p-6">
                 <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
+                <li><a href="#projects">Work</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </div>
@@ -227,67 +184,50 @@
 
     <main>
         <!-- Hero Section -->
-        <section id="hero" class="h-screen min-h-[700px] flex flex-col justify-center items-center text-center relative overflow-hidden">
-            <div class="relative z-10 p-4">
-                <h1 class="hero-name font-serif reveal-element">REYKAL</h1>
-                <p class="text-lg md:text-xl max-w-2xl text-ink-light reveal-element" style="transition-delay: 0.3s;">
-                    An AI & Machine Learning Developer crafting intelligent, impactful, and scalable solutions.
-                </p>
+        <section id="hero" class="pt-32 pb-16 md:pt-48 md:pb-24">
+            <div class="container mx-auto px-4">
+                <div class="grid md:grid-cols-3 gap-8 items-center">
+                    <div class="md:col-span-2">
+                        <h1 class="text-5xl md:text-7xl font-serif leading-tight reveal-element">
+                            A thoughtful approach to Artificial Intelligence and Machine Learning.
+                        </h1>
+                    </div>
+                    <div class="flex justify-center reveal-element" style="transition-delay: 0.2s;">
+                         <img src="WhatsApp Image 2025-03-11 at 01.26.27 (3).png" alt="Foto Profil Reykal" class="w-48 h-48 md:w-64 md:h-64 object-cover rounded-full" />
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- About Section -->
         <section id="about" class="py-24 md:py-40">
             <div class="container mx-auto px-4">
-                <div class="grid md:grid-cols-5 gap-12 items-center">
-                    <div class="md:col-span-2 reveal-element">
-                        <img src="WhatsApp Image 2025-03-11 at 01.26.27 (3).png" alt="Foto Profil Reykal" class="w-full h-auto object-cover" />
-                    </div>
-                    <div class="md:col-span-3 reveal-element" style="transition-delay: 0.2s;">
-                        <p class="section-tag mb-4">About Me</p>
-                        <h2 class="section-title mb-8">Transforming Data into Dialogue</h2>
-                        <p class="text-lg text-ink-light leading-relaxed max-w-xl">
-                            Saya adalah seorang AI Engineer dengan hasrat mendalam untuk mengubah data kompleks menjadi solusi machine learning yang intuitif dan efisien. Saya percaya bahwa teknologi terbaik adalah yang terasa seperti sihir—sederhana di permukaan, namun didukung oleh rekayasa yang canggih.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Skills Marquee Section -->
-        <section id="skills" class="py-16 md:py-24 bg-canvas">
-            <div class="marquee">
-                <div class="marquee-content">
-                    <div class="marquee-item">Python <span>/</span> Machine Learning</div>
-                    <div class="marquee-item">Data Analysis <span>/</span> HTML & CSS</div>
-                    <div class="marquee-item">JavaScript <span>/</span> Creative Problem Solving</div>
-                    <!-- Duplicate for seamless loop -->
-                    <div class="marquee-item">Python <span>/</span> Machine Learning</div>
-                    <div class="marquee-item">Data Analysis <span>/</span> HTML & CSS</div>
-                    <div class="marquee-item">JavaScript <span>/</span> Creative Problem Solving</div>
+                <div class="max-w-4xl mx-auto reveal-element">
+                    <p class="section-tag mb-4">Philosophy</p>
+                    <h2 class="section-title mb-8">Engineering with Empathy</h2>
+                    <p class="text-lg md:text-xl text-ink-light leading-relaxed">
+                        Saya percaya teknologi yang hebat bukan hanya tentang algoritma yang kompleks, tetapi tentang pemahaman mendalam terhadap kebutuhan manusia. Pendekatan saya adalah menggabungkan ketajaman teknis dengan empati, menciptakan solusi AI yang tidak hanya cerdas, tetapi juga intuitif, bermanfaat, dan terasa manusiawi.
+                    </p>
                 </div>
             </div>
         </section>
 
         <!-- Projects Section -->
-        <section id="projects" class="py-24 md:py-40">
+        <section id="projects" class="py-24 md:py-40 bg-canvas">
             <div class="container mx-auto px-4">
                 <div class="max-w-4xl mx-auto reveal-element">
-                    <p class="section-tag text-center mb-4">Selected Works</p>
-                    <h2 class="section-title text-center mb-16">Case Studies</h2>
+                    <p class="section-tag mb-4">Selected Works</p>
+                    <h2 class="section-title mb-16">Explorations in AI</h2>
                 </div>
-                <div class="reveal-element" style="transition-delay: 0.2s;">
+                <div class="max-w-4xl mx-auto border-b border-border-color reveal-element" style="transition-delay: 0.2s;">
                     <!-- Project 1 -->
-                    <a href="#" class="project-item group flex justify-between items-center p-8 cursor-pointer" onclick="event.preventDefault(); openProjectModal();">
+                    <a href="#" class="project-item group flex justify-between items-center py-8 cursor-pointer" onclick="event.preventDefault(); openProjectModal();">
                         <div>
-                            <p class="text-ink-light group-hover:text-accent transition-colors">01</p>
-                            <h3 class="text-3xl md:text-6xl font-serif my-2">Arum - Barista AI</h3>
+                            <p class="text-ink-light text-sm">01</p>
+                            <h3 class="text-3xl md:text-5xl font-serif mt-2">Arum - Barista AI</h3>
                         </div>
-                        <div class="text-2xl md:text-4xl transform group-hover:translate-x-2 transition-transform">
+                        <div class="text-2xl md:text-3xl text-ink-light arrow">
                             &rarr;
-                        </div>
-                        <div class="project-image-wrapper">
-                            <img src="Untitled (28).png" alt="Arum - Barista AI" class="w-full h-auto object-cover shadow-2xl">
                         </div>
                     </a>
                     <!-- Add more project-items here -->
@@ -305,66 +245,71 @@
                     <img src="rey.wuaze.com__i=1(iPhone 14 Pro Max).png" alt="Arum - Mobile Screenshot" class="border border-border-color">
                 </div>
                 <p class="text-lg text-ink-light mb-6">
-                    Arum adalah asisten virtual yang dirancang untuk meningkatkan pengalaman pemesanan di kafe virtual. Dengan integrasi Google Gemini Flash, Arum mampu memahami bahasa alami, memberikan rekomendasi, dan memproses pesanan dengan efisien.
+                    Arum adalah eksplorasi dalam menciptakan asisten virtual yang terasa alami untuk pemesanan di kafe. Menggunakan Google Gemini Flash, proyek ini fokus pada pemahaman bahasa natural untuk memberikan rekomendasi personal dan memproses pesanan secara efisien.
                 </p>
                 <div class="flex flex-wrap gap-3 mb-6">
-                    <span class="px-4 py-1 border border-border-color text-ink-light text-sm">Python</span>
-                    <span class="px-4 py-1 border border-border-color text-ink-light text-sm">Flask</span>
-                    <span class="px-4 py-1 border border-border-color text-ink-light text-sm">Google Gemini Flash</span>
+                    <span class="px-4 py-2 border border-border-color text-ink-light text-sm rounded-full">Python</span>
+                    <span class="px-4 py-2 border border-border-color text-ink-light text-sm rounded-full">Flask</span>
+                    <span class="px-4 py-2 border border-border-color text-ink-light text-sm rounded-full">Google Gemini</span>
                 </div>
-                <a href="https://aicoffee.pages.dev" target="_blank" class="text-accent font-semibold text-lg hover:underline">Lihat Demo Langsung &rarr;</a>
+                <a href="https://aicoffee.pages.dev" target="_blank" class="text-accent font-semibold text-lg hover:underline">View Live Demo &rarr;</a>
             </div>
         </div>
         
-        <!-- Certifications Section -->
-        <section id="certifications" class="py-24 md:py-40 bg-canvas">
-            <div class="container mx-auto px-4 text-center reveal-element">
-                <p class="section-tag mb-4">Validation</p>
-                <h2 class="section-title mb-12">Certification</h2>
-                <div class="flex justify-center">
-                    <a href="https://coursera.org/verify/specialization/QG3SZH3EVR8L" target="_blank" rel="noopener noreferrer" class="block border border-border-color p-4 hover:shadow-xl transition-shadow duration-300 max-w-4xl">
-                        <img src="sertifikat.png" alt="Sertifikat Machine Learning" class="w-full" />
-                    </a>
+        <!-- Skills & Certifications Section -->
+        <section id="skills" class="py-24 md:py-40">
+            <div class="container mx-auto px-4">
+                <div class="grid md:grid-cols-2 gap-16 md:gap-24">
+                    <div class="reveal-element">
+                        <p class="section-tag mb-4">Capabilities</p>
+                        <h2 class="section-title mb-8">Core Competencies</h2>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="skill-pill px-4 py-2 rounded-full">Python</span>
+                            <span class="skill-pill px-4 py-2 rounded-full">Machine Learning</span>
+                            <span class="skill-pill px-4 py-2 rounded-full">Data Analysis</span>
+                            <span class="skill-pill px-4 py-2 rounded-full">HTML & CSS</span>
+                            <span class="skill-pill px-4 py-2 rounded-full">JavaScript</span>
+                            <span class="skill-pill px-4 py-2 rounded-full">Problem Solving</span>
+                        </div>
+                    </div>
+                    <div class="reveal-element" style="transition-delay: 0.2s;">
+                        <p class="section-tag mb-4">Validation</p>
+                        <h2 class="section-title mb-8">Certification</h2>
+                        <a href="https://coursera.org/verify/specialization/QG3SZH3EVR8L" target="_blank" rel="noopener noreferrer" class="block border border-border-color p-4 hover:shadow-xl transition-shadow duration-300">
+                            <img src="sertifikat.png" alt="Sertifikat Machine Learning" class="w-full" />
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="py-24 md:py-40">
+        <section id="contact" class="py-24 md:py-40 bg-canvas">
             <div class="container mx-auto px-4">
                 <div class="max-w-2xl mx-auto text-center reveal-element">
-                    <p class="section-tag mb-4">Get in Touch</p>
-                    <h2 class="section-title mb-4">Let's Build Something New</h2>
-                    <p class="text-lg text-ink-light mb-12">Punya ide atau proyek menarik? Saya ingin mendengarnya.</p>
+                    <p class="section-tag mb-4">Let's Connect</p>
+                    <h2 class="section-title mb-12">Have a project in mind?</h2>
                 </div>
                 <div class="max-w-2xl mx-auto reveal-element" style="transition-delay: 0.2s;">
                     <form id="contact-form" class="space-y-8">
-                        <div>
-                            <input type="text" id="name" name="name" required placeholder="Nama Anda" class="block w-full" />
-                        </div>
-                        <div>
-                            <input type="email" id="email" name="email" required placeholder="Email Anda" class="block w-full" />
-                        </div>
-                        <div>
-                            <textarea id="message" name="message" rows="4" required placeholder="Pesan Anda" class="block w-full"></textarea>
-                        </div>
-                        <button type="submit" class="w-full py-4 rounded-md text-lg font-semibold" id="submit-btn-contact">
-                            Kirim Pesan
-                        </button>
+                        <div><input type="text" id="name" name="name" required placeholder="Your Name" class="block w-full" /></div>
+                        <div><input type="email" id="email" name="email" required placeholder="Your Email" class="block w-full" /></div>
+                        <div><textarea id="message" name="message" rows="4" required placeholder="Your Message" class="block w-full"></textarea></div>
+                        <button type="submit" class="w-full py-4 rounded-md text-lg font-semibold" id="submit-btn-contact">Send Message</button>
                     </form>
-                    <div id="notification"></div>
+                    <div id="notification" class="fixed bottom-5 left-1/2 -translate-x-1/2 bg-ink text-canvas text-sm py-2 px-4 rounded-full opacity-0 transition-all"></div>
                 </div>
             </div>
         </section>
     </main>
 
     <footer class="py-12">
-        <div class="container mx-auto px-4 text-center">
-            <div class="flex justify-center gap-8 mb-6">
-                <a href="https://www.linkedin.com/in/reykal-al-hikam-469956286/" target="_blank" class="social-icon text-2xl"><i class="fa-brands fa-linkedin"></i></a>
-                <a href="https://www.instagram.com/reyhkm" target="_blank" class="social-icon text-2xl"><i class="fa-brands fa-instagram"></i></a>
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-center">
+            <p class="text-sm text-ink-light mb-4 md:mb-0">&copy; 2025 Reykal. A Study in AI.</p>
+            <div class="flex gap-6">
+                <a href="https://www.linkedin.com/in/reykal-al-hikam-469956286/" target="_blank" class="social-icon text-xl"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/reyhkm" target="_blank" class="social-icon text-xl"><i class="fa-brands fa-instagram"></i></a>
             </div>
-            <p class="text-sm text-gray-400">&copy; 2025 Reykal. An AI Atelier.</p>
         </div>
     </footer>
 
@@ -377,7 +322,7 @@
             $(window).on('mousemove', function(e) {
                 const posX = e.clientX; const posY = e.clientY;
                 cursorDot.css({ left: `${posX}px`, top: `${posY}px` });
-                cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 300, queue: false });
+                cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 400, queue: false });
             });
 
             // --- Scroll Reveal Logic ---
@@ -395,7 +340,7 @@
             $('#mobile-menu-btn').click(() => $('#mobile-menu').slideToggle());
             $('a[href*="#"]').on('click', function (e) {
                 e.preventDefault();
-                $('html, body').animate({ scrollTop: $($(this).attr('href')).offset().top - 70 }, 600);
+                $('html, body').animate({ scrollTop: $($(this).attr('href')).offset().top - 80 }, 800);
                 if ($('#mobile-menu').is(':visible')) $('#mobile-menu').slideUp();
             });
             $(window).on('scroll', () => $('.navbar').toggleClass('navbar-scrolled', $(window).scrollTop() > 50));
@@ -405,19 +350,20 @@
                 e.preventDefault();
                 const scriptURL = 'https://script.google.com/macros/s/AKfycbwOnpojIrcb8FSlxQcswDYuRqTQ1qMGfyBZEsL72OCf9Bh23MF0d9Hex4PoF7WRAC_0/exec';
                 const formData = { name: $('#name').val(), email: $('#email').val(), message: $('#message').val() };
-                $('#submit-btn-contact').prop('disabled', true).text('Mengirim...');
+                $('#submit-btn-contact').prop('disabled', true).text('Sending...');
                 fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(formData) })
                     .then(() => {
-                        showNotification('Pesan berhasil dikirim!');
+                        showNotification('Message sent successfully!');
                         $('#contact-form')[0].reset();
                     })
-                    .catch(error => showNotification('Terjadi kesalahan.'))
-                    .finally(() => $('#submit-btn-contact').prop('disabled', false).text('Kirim Pesan'));
+                    .catch(error => showNotification('An error occurred.'))
+                    .finally(() => $('#submit-btn-contact').prop('disabled', false).text('Send Message'));
             });
 
             function showNotification(message) {
-                $('#notification').text(message).addClass('show');
-                setTimeout(() => $('#notification').removeClass('show'), 3000);
+                const notification = $('#notification');
+                notification.text(message).css('opacity', 1);
+                setTimeout(() => notification.css('opacity', 0), 3000);
             }
         });
 
