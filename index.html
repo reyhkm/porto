@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Atelier Reykal - AI & Machine Learning</title>
+    <title>Reykal - An AI Atelier</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -14,7 +14,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-    <!-- Tailwind CSS (No changes needed here) -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -22,10 +22,10 @@
                 extend: {
                     colors: {
                         'canvas': '#f4f1ea',
-                        'ink': '#2a2a2a',
+                        'ink': '#1c1c1c', // Slightly darker ink
                         'ink-light': '#5b5b5b',
-                        'accent': '#d97706', // Amber 600
-                        'accent-dark': '#b45309', // Amber 700
+                        'accent': '#d97706',
+                        'accent-dark': '#b45309',
                         'border-color': '#dcd8d0',
                     },
                     fontFamily: {
@@ -38,19 +38,13 @@
     </script>
 
     <style>
-        /* --- ATELIER REYKAL - CORE STYLES --- */
-        :root {
-            --cursor-size: 10px;
-            --cursor-size-hover: 50px;
-        }
+        /* --- KINETIC ARTISTRY - CORE STYLES --- */
+        :root { --cursor-size: 10px; --cursor-size-hover: 50px; }
 
-        html {
-            cursor: none;
-        }
-
+        html { cursor: none; }
         body {
             background-color: #f4f1ea;
-            color: #2a2a2a;
+            color: #1c1c1c;
             font-family: 'Inter', sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -58,202 +52,162 @@
 
         /* --- Custom Cursor --- */
         .cursor-dot, .cursor-outline {
-            pointer-events: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            z-index: 9999;
-            mix-blend-mode: difference;
+            pointer-events: none; position: fixed; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); border-radius: 50%;
+            z-index: 9999; mix-blend-mode: difference;
             transition: opacity 0.3s ease, transform 0.2s ease;
         }
-        .cursor-dot {
-            width: var(--cursor-size);
-            height: var(--cursor-size);
-            background-color: white;
-        }
+        .cursor-dot { width: var(--cursor-size); height: var(--cursor-size); background-color: white; }
         .cursor-outline {
-            width: var(--cursor-size-hover);
-            height: var(--cursor-size-hover);
+            width: var(--cursor-size-hover); height: var(--cursor-size-hover);
             background-color: rgba(255, 255, 255, 0.8);
             transform: translate(-50%, -50%) scale(0);
         }
         body:hover .cursor-outline { transform: translate(-50%, -50%) scale(1); }
         a:hover ~ .cursor-outline, button:hover ~ .cursor-outline, .cursor-pointer:hover ~ .cursor-outline {
-            transform: translate(-50%, -50%) scale(1.5);
-            opacity: 0.5;
+            transform: translate(-50%, -50%) scale(1.5); opacity: 0.5;
         }
+
+        /* --- Scroll Reveal Animations --- */
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+            transition-delay: 0.2s;
+        }
+        .reveal-element.is-revealed { opacity: 1; transform: translateY(0); }
 
         /* --- Typography & Section Styling --- */
         h1, h2, h3 { font-family: 'DM Serif Display', serif; }
         .section-title {
             font-size: clamp(3rem, 10vw, 6rem);
-            line-height: 1;
-            color: #2a2a2a;
+            line-height: 1; color: #1c1c1c;
         }
-        .section-number {
-            font-size: clamp(6rem, 20vw, 12rem);
-            font-weight: bold;
-            color: rgba(0, 0, 0, 0.05);
-            position: absolute;
-            z-index: 0;
-            user-select: none;
+        .section-tag {
+            font-size: 1rem; letter-spacing: 0.1em;
+            text-transform: uppercase; color: #d97706;
         }
 
         /* --- Navbar --- */
-        .navbar {
-            border-bottom: 1px solid transparent;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
+        .navbar { transition: background-color 0.3s ease, border-color 0.3s ease; }
         .navbar-scrolled {
-            background-color: rgba(244, 241, 234, 0.8); /* canvas with opacity */
+            background-color: rgba(244, 241, 234, 0.8);
             backdrop-filter: blur(10px);
-            border-bottom-color: #dcd8d0; /* border-color */
+            border-bottom: 1px solid #dcd8d0;
         }
         .navbar a {
-            font-size: 0.9rem;
-            letter-spacing: 0.05em;
-            color: #2a2a2a;
-            position: relative;
-            padding-bottom: 4px;
+            font-size: 0.9rem; letter-spacing: 0.05em; color: #1c1c1c;
+            position: relative; padding-bottom: 4px;
         }
         .navbar a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background-color: #d97706;
+            content: ''; position: absolute; bottom: 0; left: 0;
+            width: 0; height: 1px; background-color: #d97706;
             transition: width 0.3s ease;
         }
         .navbar a:hover::after { width: 100%; }
 
         /* --- Hero Section --- */
-        .vertical-text {
-            writing-mode: vertical-rl;
-            transform: rotate(180deg);
-            color: #dcd8d0;
+        #hero .hero-name {
+            font-size: clamp(5rem, 25vw, 18rem);
+            line-height: 0.8;
+            color: #1c1c1c;
         }
 
         /* --- Project Section --- */
         .project-item {
-            border-top: 1px solid #dcd8d0;
-            transition: background-color 0.4s ease;
+            border-bottom: 1px solid #dcd8d0;
+            position: relative;
         }
-        .project-item:hover {
-            background-color: #edeae3;
+        .project-image-wrapper {
+            position: absolute; top: 50%; left: 55%;
+            transform: translateY(-50%) scale(0.9) rotate(5deg);
+            width: 320px; z-index: 10;
+            opacity: 0; pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
-        .project-item .project-image {
-            opacity: 0;
-            transform: scale(0.95) rotate(-3deg);
-            transition: opacity 0.4s ease, transform 0.4s ease;
-        }
-        .project-item:hover .project-image {
+        .project-item:hover .project-image-wrapper {
             opacity: 1;
-            transform: scale(1) rotate(0deg);
+            transform: translateY(-50%) scale(1) rotate(0deg);
+            left: 60%;
+        }
+        @media (max-width: 768px) {
+            .project-image-wrapper { display: none; }
         }
 
-        /* --- Skills Section --- */
-        .skill-item {
-            font-family: 'DM Serif Display', serif;
-            font-size: 2rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid #dcd8d0;
-            transition: color 0.3s ease;
+        /* --- Skills Marquee --- */
+        .marquee {
+            position: relative;
+            width: 100vw;
+            max-width: 100%;
+            overflow: hidden;
         }
-        .skill-item:hover {
-            color: #d97706;
+        .marquee-content {
+            display: flex;
+            width: fit-content;
+            animation: marquee 30s linear infinite;
+        }
+        .marquee-item {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(3rem, 8vw, 5rem);
+            padding: 0 2rem;
+            flex-shrink: 0;
+            white-space: nowrap;
+            color: #1c1c1c;
+        }
+        .marquee-item span { color: #d97706; margin: 0 2rem; }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
 
         /* --- Contact Form --- */
         #contact input, #contact textarea {
-            background-color: transparent;
-            border: none;
-            border-bottom: 1px solid #dcd8d0;
-            border-radius: 0;
-            padding: 0.75rem 0;
-            font-size: 1rem;
-            color: #2a2a2a;
+            background-color: transparent; border: none;
+            border-bottom: 1px solid #dcd8d0; border-radius: 0;
+            padding: 0.75rem 0; font-size: 1rem; color: #1c1c1c;
             transition: border-color 0.3s ease;
         }
         #contact input:focus, #contact textarea:focus {
-            outline: none;
-            box-shadow: none;
-            border-bottom-color: #d97706;
-        }
-        #contact label {
-            color: #5b5b5b;
+            outline: none; box-shadow: none; border-bottom-color: #d97706;
         }
         #contact button {
-            background-color: #2a2a2a;
-            color: #f4f1ea;
-            border: 1px solid #2a2a2a;
+            background-color: #1c1c1c; color: #f4f1ea; border: 1px solid #1c1c1c;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
-        #contact button:hover {
-            background-color: transparent;
-            color: #2a2a2a;
-        }
+        #contact button:hover { background-color: transparent; color: #1c1c1c; }
 
         /* --- Footer --- */
-        footer {
-            background-color: #2a2a2a;
-            color: #f4f1ea;
-        }
-        .social-icon {
-            color: #f4f1ea;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-        .social-icon:hover {
-            color: #d97706;
-            transform: translateY(-3px);
-        }
+        footer { background-color: #1c1c1c; color: #f4f1ea; }
+        .social-icon { color: #f4f1ea; transition: color 0.3s ease, transform 0.3s ease; }
+        .social-icon:hover { color: #d97706; transform: translateY(-3px); }
 
         /* --- Notification & Modal (Re-styled) --- */
         #notification {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
+            position: fixed; bottom: 20px; left: 50%;
             transform: translateX(-50%) translateY(20px);
-            background-color: #2a2a2a;
-            color: #f4f1ea;
-            padding: 12px 24px;
-            border-radius: 50px;
-            font-size: 1rem;
-            opacity: 0;
-            z-index: 1000;
+            background-color: #1c1c1c; color: #f4f1ea;
+            padding: 12px 24px; border-radius: 50px; font-size: 1rem;
+            opacity: 0; z-index: 1000;
             transition: opacity 0.5s ease, transform 0.5s ease;
         }
-        #notification.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(42, 42, 42, 0.8); backdrop-filter: blur(5px); }
-        .modal-content { background-color: #f4f1ea; color: #2a2a2a; margin: 5% auto; padding: 40px; border: 1px solid #dcd8d0; width: 90%; max-width: 700px; border-radius: 0; position: relative; }
-        .modal-close { position: absolute; top: 15px; right: 20px; font-size: 28px; background: transparent; border: none; color: #2a2a2a; cursor: pointer; }
-        .modal-image-container img { border: 1px solid #dcd8d0; }
-        .half-image-container { max-height: 300px; overflow: hidden; }
-        
-        /* Chat Widget is intentionally removed for this artistic version to maintain focus. If needed, it can be re-added with new styling. */
+        #notification.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(28, 28, 28, 0.8); backdrop-filter: blur(5px); }
+        .modal-content { background-color: #f4f1ea; color: #1c1c1c; margin: 5% auto; padding: 40px; border: 1px solid #dcd8d0; width: 90%; max-width: 700px; border-radius: 0; position: relative; }
+        .modal-close { position: absolute; top: 15px; right: 20px; font-size: 28px; background: transparent; border: none; color: #1c1c1c; cursor: pointer; }
     </style>
 </head>
 
 <body class="bg-canvas text-ink font-sans">
 
-    <!-- Custom Cursor -->
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
 
-    <!-- Navbar -->
     <nav class="navbar fixed w-full z-40">
         <div class="container mx-auto flex items-center justify-between p-4 md:p-6">
-            <a href="#" class="font-serif text-xl text-ink">Atelier Reykal</a>
+            <a href="#" class="font-serif text-xl text-ink">Reykal</a>
             <div class="hidden md:flex space-x-8">
                 <a href="#about">About</a>
                 <a href="#projects">Projects</a>
-                <a href="#skills">Skills</a>
                 <a href="#contact">Contact</a>
             </div>
             <div class="md:hidden">
@@ -262,159 +216,155 @@
                 </button>
             </div>
         </div>
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="md:hidden hidden bg-canvas/80 backdrop-blur-md">
             <ul class="flex flex-col items-center space-y-6 p-6">
                 <li><a href="#about">About</a></li>
                 <li><a href="#projects">Projects</a></li>
-                <li><a href="#skills">Skills</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="hero" class="h-screen min-h-[700px] flex items-center">
-        <div class="container mx-auto px-4">
-            <div class="flex items-center">
-                <div class="hidden md:block w-1/12">
-                    <h1 class="vertical-text text-8xl font-serif select-none">REYKAL</h1>
-                </div>
-                <div class="w-full md:w-11/12 md:pl-12">
-                    <h2 class="text-4xl md:text-6xl font-serif leading-tight">AI & Machine Learning<br>Developer</h2>
-                    <p class="mt-6 text-lg md:text-xl max-w-2xl text-ink-light">
-                        Menciptakan solusi cerdas yang impactful dan scalable melalui perpaduan antara teknologi dan kreativitas problem-solving.
-                    </p>
-                </div>
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="h-screen min-h-[700px] flex flex-col justify-center items-center text-center relative overflow-hidden">
+            <div class="relative z-10 p-4">
+                <h1 class="hero-name font-serif reveal-element">REYKAL</h1>
+                <p class="text-lg md:text-xl max-w-2xl text-ink-light reveal-element" style="transition-delay: 0.3s;">
+                    An AI & Machine Learning Developer crafting intelligent, impactful, and scalable solutions.
+                </p>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-24 md:py-40 relative">
-        <span class="section-number top-0 left-0 -translate-x-1/4">01</span>
-        <div class="container mx-auto px-4">
-            <div class="grid md:grid-cols-2 gap-12 md:gap-24 items-center">
-                <div class="order-2 md:order-1">
-                    <h2 class="section-title mb-8">About Me</h2>
-                    <p class="text-lg text-ink-light leading-relaxed">
-                        Saya adalah seorang AI Engineer dengan hasrat mendalam untuk mengubah data kompleks menjadi solusi machine learning yang intuitif dan efisien. Saya percaya bahwa teknologi terbaik adalah yang terasa seperti sihir—sederhana di permukaan, namun didukung oleh rekayasa yang canggih.
-                    </p>
-                </div>
-                <div class="order-1 md:order-2 flex justify-center">
-                    <img src="WhatsApp Image 2025-03-11 at 01.26.27 (3).png" alt="Foto Profil Reykal" class="w-72 h-72 md:w-96 md:h-96 object-cover" />
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="py-24 md:py-40 bg-canvas">
-        <div class="container mx-auto px-4">
-            <h2 class="section-title text-center mb-16">Selected Works</h2>
-            <div class="space-y-4">
-                <!-- Project 1 -->
-                <div class="project-item grid md:grid-cols-3 gap-8 items-center p-8 cursor-pointer" onclick="openProjectModal()">
-                    <div class="md:col-span-2">
-                        <p class="text-accent font-semibold">01</p>
-                        <h3 class="text-3xl md:text-5xl font-serif my-2">Arum - Barista AI</h3>
-                        <p class="text-ink-light">Asisten virtual untuk pemesanan kopi, ditenagai oleh Google Gemini Flash.</p>
+        <!-- About Section -->
+        <section id="about" class="py-24 md:py-40">
+            <div class="container mx-auto px-4">
+                <div class="grid md:grid-cols-5 gap-12 items-center">
+                    <div class="md:col-span-2 reveal-element">
+                        <img src="WhatsApp Image 2025-03-11 at 01.26.27 (3).png" alt="Foto Profil Reykal" class="w-full h-auto object-cover" />
                     </div>
-                    <div class="hidden md:block">
-                        <img src="Untitled (28).png" alt="Arum - Barista AI" class="project-image w-full h-auto object-cover shadow-lg">
+                    <div class="md:col-span-3 reveal-element" style="transition-delay: 0.2s;">
+                        <p class="section-tag mb-4">About Me</p>
+                        <h2 class="section-title mb-8">Transforming Data into Dialogue</h2>
+                        <p class="text-lg text-ink-light leading-relaxed max-w-xl">
+                            Saya adalah seorang AI Engineer dengan hasrat mendalam untuk mengubah data kompleks menjadi solusi machine learning yang intuitif dan efisien. Saya percaya bahwa teknologi terbaik adalah yang terasa seperti sihir—sederhana di permukaan, namun didukung oleh rekayasa yang canggih.
+                        </p>
                     </div>
                 </div>
-                <!-- Add more project-items here if needed -->
+            </div>
+        </section>
+
+        <!-- Skills Marquee Section -->
+        <section id="skills" class="py-16 md:py-24 bg-canvas">
+            <div class="marquee">
+                <div class="marquee-content">
+                    <div class="marquee-item">Python <span>/</span> Machine Learning</div>
+                    <div class="marquee-item">Data Analysis <span>/</span> HTML & CSS</div>
+                    <div class="marquee-item">JavaScript <span>/</span> Creative Problem Solving</div>
+                    <!-- Duplicate for seamless loop -->
+                    <div class="marquee-item">Python <span>/</span> Machine Learning</div>
+                    <div class="marquee-item">Data Analysis <span>/</span> HTML & CSS</div>
+                    <div class="marquee-item">JavaScript <span>/</span> Creative Problem Solving</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-24 md:py-40">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto reveal-element">
+                    <p class="section-tag text-center mb-4">Selected Works</p>
+                    <h2 class="section-title text-center mb-16">Case Studies</h2>
+                </div>
+                <div class="reveal-element" style="transition-delay: 0.2s;">
+                    <!-- Project 1 -->
+                    <a href="#" class="project-item group flex justify-between items-center p-8 cursor-pointer" onclick="event.preventDefault(); openProjectModal();">
+                        <div>
+                            <p class="text-ink-light group-hover:text-accent transition-colors">01</p>
+                            <h3 class="text-3xl md:text-6xl font-serif my-2">Arum - Barista AI</h3>
+                        </div>
+                        <div class="text-2xl md:text-4xl transform group-hover:translate-x-2 transition-transform">
+                            &rarr;
+                        </div>
+                        <div class="project-image-wrapper">
+                            <img src="Untitled (28).png" alt="Arum - Barista AI" class="w-full h-auto object-cover shadow-2xl">
+                        </div>
+                    </a>
+                    <!-- Add more project-items here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Detail Modal -->
+        <div id="project-modal" class="modal">
+            <div class="modal-content">
+                <button class="modal-close" id="close-modal">×</button>
+                <p class="section-tag mb-2">Case Study</p>
+                <h2 class="text-3xl md:text-4xl font-serif mb-6">Arum - Barista AI</h2>
+                <div class="mb-6">
+                    <img src="rey.wuaze.com__i=1(iPhone 14 Pro Max).png" alt="Arum - Mobile Screenshot" class="border border-border-color">
+                </div>
+                <p class="text-lg text-ink-light mb-6">
+                    Arum adalah asisten virtual yang dirancang untuk meningkatkan pengalaman pemesanan di kafe virtual. Dengan integrasi Google Gemini Flash, Arum mampu memahami bahasa alami, memberikan rekomendasi, dan memproses pesanan dengan efisien.
+                </p>
+                <div class="flex flex-wrap gap-3 mb-6">
+                    <span class="px-4 py-1 border border-border-color text-ink-light text-sm">Python</span>
+                    <span class="px-4 py-1 border border-border-color text-ink-light text-sm">Flask</span>
+                    <span class="px-4 py-1 border border-border-color text-ink-light text-sm">Google Gemini Flash</span>
+                </div>
+                <a href="https://aicoffee.pages.dev" target="_blank" class="text-accent font-semibold text-lg hover:underline">Lihat Demo Langsung &rarr;</a>
             </div>
         </div>
-    </section>
+        
+        <!-- Certifications Section -->
+        <section id="certifications" class="py-24 md:py-40 bg-canvas">
+            <div class="container mx-auto px-4 text-center reveal-element">
+                <p class="section-tag mb-4">Validation</p>
+                <h2 class="section-title mb-12">Certification</h2>
+                <div class="flex justify-center">
+                    <a href="https://coursera.org/verify/specialization/QG3SZH3EVR8L" target="_blank" rel="noopener noreferrer" class="block border border-border-color p-4 hover:shadow-xl transition-shadow duration-300 max-w-4xl">
+                        <img src="sertifikat.png" alt="Sertifikat Machine Learning" class="w-full" />
+                    </a>
+                </div>
+            </div>
+        </section>
 
-    <!-- Project Detail Modal -->
-    <div id="project-modal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close" id="close-modal">×</button>
-            <h2 class="text-3xl md:text-4xl font-serif mb-6">Arum - Barista AI</h2>
-            <div class="modal-image-container mb-6">
-                <img src="rey.wuaze.com__i=1(iPhone 14 Pro Max).png" alt="Arum - Mobile Screenshot">
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 md:py-40">
+            <div class="container mx-auto px-4">
+                <div class="max-w-2xl mx-auto text-center reveal-element">
+                    <p class="section-tag mb-4">Get in Touch</p>
+                    <h2 class="section-title mb-4">Let's Build Something New</h2>
+                    <p class="text-lg text-ink-light mb-12">Punya ide atau proyek menarik? Saya ingin mendengarnya.</p>
+                </div>
+                <div class="max-w-2xl mx-auto reveal-element" style="transition-delay: 0.2s;">
+                    <form id="contact-form" class="space-y-8">
+                        <div>
+                            <input type="text" id="name" name="name" required placeholder="Nama Anda" class="block w-full" />
+                        </div>
+                        <div>
+                            <input type="email" id="email" name="email" required placeholder="Email Anda" class="block w-full" />
+                        </div>
+                        <div>
+                            <textarea id="message" name="message" rows="4" required placeholder="Pesan Anda" class="block w-full"></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-4 rounded-md text-lg font-semibold" id="submit-btn-contact">
+                            Kirim Pesan
+                        </button>
+                    </form>
+                    <div id="notification"></div>
+                </div>
             </div>
-            <p class="text-lg text-ink-light mb-6">
-                Arum adalah asisten virtual yang dirancang untuk meningkatkan pengalaman pemesanan di kafe virtual. Dengan integrasi Google Gemini Flash, Arum mampu memahami bahasa alami, memberikan rekomendasi, dan memproses pesanan dengan efisien.
-            </p>
-            <div class="flex flex-wrap gap-3 mb-6">
-                <span class="px-4 py-1 border border-border-color text-ink-light text-sm">Python</span>
-                <span class="px-4 py-1 border border-border-color text-ink-light text-sm">Flask</span>
-                <span class="px-4 py-1 border border-border-color text-ink-light text-sm">Google Gemini Flash</span>
-            </div>
-            <a href="https://aicoffee.pages.dev" target="_blank" class="text-accent font-semibold text-lg hover:underline">Lihat Demo Langsung &rarr;</a>
-        </div>
-    </div>
+        </section>
+    </main>
 
-    <!-- Skills Section -->
-    <section id="skills" class="py-24 md:py-40 relative">
-        <span class="section-number bottom-0 right-0 translate-x-1/4">02</span>
-        <div class="container mx-auto px-4">
-            <h2 class="section-title mb-16">Capabilities</h2>
-            <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-x-16">
-                <div class="skill-item">Python</div>
-                <div class="skill-item">Machine Learning</div>
-                <div class="skill-item">Data Analysis</div>
-                <div class="skill-item">HTML</div>
-                <div class="skill-item">CSS</div>
-                <div class="skill-item">JavaScript</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Certifications Section -->
-    <section id="certifications" class="py-24 md:py-40">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="section-title mb-12">Certification</h2>
-            <div class="flex justify-center">
-                <a href="https://coursera.org/verify/specialization/QG3SZH3EVR8L" target="_blank" rel="noopener noreferrer" class="block border border-border-color p-4 hover:shadow-xl transition-shadow duration-300">
-                    <img src="sertifikat.png" alt="Sertifikat Machine Learning" class="w-full max-w-3xl" />
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-24 md:py-40 bg-canvas">
-        <div class="container mx-auto px-4">
-            <div class="max-w-2xl mx-auto text-center">
-                <h2 class="section-title mb-4">Let's Connect</h2>
-                <p class="text-lg text-ink-light mb-12">Punya ide atau proyek menarik? Saya ingin mendengarnya.</p>
-            </div>
-            <div class="max-w-2xl mx-auto">
-                <form id="contact-form" class="space-y-8">
-                    <div>
-                        <label for="name" class="block text-sm font-medium">Nama</label>
-                        <input type="text" id="name" name="name" required class="mt-1 block w-full" />
-                    </div>
-                    <div>
-                        <label for="email" class="block text-sm font-medium">Email</label>
-                        <input type="email" id="email" name="email" required class="mt-1 block w-full" />
-                    </div>
-                    <div>
-                        <label for="message" class="block text-sm font-medium">Pesan</label>
-                        <textarea id="message" name="message" rows="4" required class="mt-1 block w-full"></textarea>
-                    </div>
-                    <button type="submit" class="w-full py-4 rounded-md text-lg font-semibold" id="submit-btn-contact">
-                        Kirim Pesan
-                    </button>
-                </form>
-                <div id="notification"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
     <footer class="py-12">
         <div class="container mx-auto px-4 text-center">
             <div class="flex justify-center gap-8 mb-6">
                 <a href="https://www.linkedin.com/in/reykal-al-hikam-469956286/" target="_blank" class="social-icon text-2xl"><i class="fa-brands fa-linkedin"></i></a>
                 <a href="https://www.instagram.com/reyhkm" target="_blank" class="social-icon text-2xl"><i class="fa-brands fa-instagram"></i></a>
             </div>
-            <p class="text-sm text-gray-400">&copy; 2025 Atelier Reykal. Crafted with passion.</p>
+            <p class="text-sm text-gray-400">&copy; 2025 Reykal. An AI Atelier.</p>
         </div>
     </footer>
 
@@ -425,73 +375,59 @@
             const cursorDot = $('.cursor-dot');
             const cursorOutline = $('.cursor-outline');
             $(window).on('mousemove', function(e) {
-                const posX = e.clientX;
-                const posY = e.clientY;
+                const posX = e.clientX; const posY = e.clientY;
                 cursorDot.css({ left: `${posX}px`, top: `${posY}px` });
-                cursorOutline.animate({
-                    left: `${posX}px`,
-                    top: `${posY}px`
-                }, { duration: 300, queue: false });
+                cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 300, queue: false });
             });
+
+            // --- Scroll Reveal Logic ---
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        $(entry.target).addClass('is-revealed');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            $('.reveal-element').each((i, el) => revealObserver.observe(el));
 
             // --- Navbar & Mobile Menu ---
             $('#mobile-menu-btn').click(() => $('#mobile-menu').slideToggle());
             $('a[href*="#"]').on('click', function (e) {
                 e.preventDefault();
-                $('html, body').animate({
-                    scrollTop: $($(this).attr('href')).offset().top - 70
-                }, 600);
+                $('html, body').animate({ scrollTop: $($(this).attr('href')).offset().top - 70 }, 600);
                 if ($('#mobile-menu').is(':visible')) $('#mobile-menu').slideUp();
             });
-            $(window).on('scroll', function () {
-                $('.navbar').toggleClass('navbar-scrolled', $(window).scrollTop() > 50);
-            });
+            $(window).on('scroll', () => $('.navbar').toggleClass('navbar-scrolled', $(window).scrollTop() > 50));
 
             // --- Contact Form ---
             $('#contact-form').on('submit', function (e) {
                 e.preventDefault();
                 const scriptURL = 'https://script.google.com/macros/s/AKfycbwOnpojIrcb8FSlxQcswDYuRqTQ1qMGfyBZEsL72OCf9Bh23MF0d9Hex4PoF7WRAC_0/exec';
-                const formData = {
-                    name: $('#name').val(),
-                    email: $('#email').val(),
-                    message: $('#message').val()
-                };
-                
+                const formData = { name: $('#name').val(), email: $('#email').val(), message: $('#message').val() };
                 $('#submit-btn-contact').prop('disabled', true).text('Mengirim...');
-
                 fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(formData) })
                     .then(() => {
                         showNotification('Pesan berhasil dikirim!');
                         $('#contact-form')[0].reset();
                     })
-                    .catch(error => {
-                        console.error('Error!', error.message);
-                        showNotification('Terjadi kesalahan.');
-                    })
-                    .finally(() => {
-                        $('#submit-btn-contact').prop('disabled', false).text('Kirim Pesan');
-                    });
+                    .catch(error => showNotification('Terjadi kesalahan.'))
+                    .finally(() => $('#submit-btn-contact').prop('disabled', false).text('Kirim Pesan'));
             });
 
             function showNotification(message) {
-                const notification = $('#notification');
-                notification.text(message).addClass('show');
-                setTimeout(() => notification.removeClass('show'), 3000);
+                $('#notification').text(message).addClass('show');
+                setTimeout(() => $('#notification').removeClass('show'), 3000);
             }
         });
 
         // --- Modal Functionality ---
-        function openProjectModal() {
-            document.getElementById("project-modal").style.display = "block";
-        }
-        document.getElementById("close-modal").addEventListener("click", () => {
-            document.getElementById("project-modal").style.display = "none";
-        });
+        function openProjectModal() { document.getElementById("project-modal").style.display = "block"; }
+        document.getElementById("close-modal").addEventListener("click", () => document.getElementById("project-modal").style.display = "none");
         window.addEventListener("click", (event) => {
             const modal = document.getElementById("project-modal");
             if (event.target == modal) modal.style.display = "none";
         });
     </script>
 </body>
-
 </html>
